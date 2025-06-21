@@ -22,7 +22,7 @@
             @click="dropdownOpen = !dropdownOpen"
             class="flex items-center gap-2 text-gray-800 dark:text-white hover:text-blue-600 font-medium focus:outline-none"
           >
-            {{ store.state.user.email }}
+            {{ username || store.state.user.email }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
@@ -34,6 +34,13 @@
             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700 z-50"
           >
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
+                <li>
+                    <span class="px-4 py-2 block font-semibold">
+                        {{ role === "user" ? "Usuario" : "Admin" }}
+                    </span>
+                    <hr/>
+                </li>
+                
               <li>
                 <a href="#" @click="logout" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                   Cerrar sesión
@@ -85,15 +92,31 @@ import { supabase } from '../../../lib/supabaseClient'
 export default {
   setup() {
     const dropdownOpen = ref(false)
+    const username = ref("");
+    const role = ref("");
 
     // Manejo de clic fuera del dropdown
-    onMounted(() => {
-      document.addEventListener('click', (e) => {
-        const dropdown = document.querySelector('.dropdown-menu')
-        if (dropdown && !dropdown.contains(e.target)) {
-          dropdownOpen.value = false
+    onMounted(async () => {
+        const { data: userData } = await supabase.auth.getUser();
+        if(!userData?.user) return;
+
+        const { data, error } = await supabase 
+        .from("profiles")
+        .select("username, role")
+        .eq("id", userData.user.id)
+        .single();
+
+        if(!error && data) {
+            username.value = data.username;
+            role.value = data.role;
         }
-      })
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.querySelector('.dropdown-menu')
+            if (dropdown && !dropdown.contains(e.target)) {
+            dropdownOpen.value = false
+            }
+        })
     })
 
     const logout = async () => {
@@ -104,6 +127,8 @@ export default {
       store,
       dropdownOpen,
       logout,
+      username,
+      role,
     }
   },
 }

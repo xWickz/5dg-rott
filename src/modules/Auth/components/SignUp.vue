@@ -6,6 +6,10 @@
       Crear Cuenta
       </div>
       <div class="mb-5">
+        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de Usuario</label>
+        <input v-model="username" type="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+      </div>
+      <div class="mb-5">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
         <input v-model="email" type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="tucorreo@gmail.com" required />
       </div>
@@ -24,40 +28,61 @@ import { ref } from 'vue';
 import { supabase } from '../../../lib/supabaseClient';
 
 export default {
-    setup() {
-        const email = ref("");
-        const password = ref("");
+  setup() {
+    const email = ref("");
+    const password = ref("");
+    const username = ref("");
 
-        const handleSignup = async () => {
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email.value,
-                    password: password.value,
-                });
+    const handleSignup = async () => {
+      if (!username.value.trim()) {
+        alert("Debes ingresar un nombre de usuario.");
+        return;
+      }
 
-                if(error) {
-                    alert(error.message || "Ocurrió un error desconocido.");
-                    return;
-                }
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.value,
+          password: password.value,
+        });
 
-                if(!data.session && data.user) {
-                    alert("Ya existe una cuenta con este correo.");
-                    return;
-                }
+        if (error) {
+          alert(error.message || "Ocurrió un error durante el registro.");
+          return;
+        }
 
-                alert("Cuenta creada con éxito.")
-                console.log({ data, error });
-                
-            } catch(error) {
-                alert(error.error_description || error.message);
-            }
-        };
+        if (data.user) {
+          const { error: profileError } = await supabase.from("profiles").insert([
+            {
+              id: data.user.id,
+              username: username.value,
+              role: "user",
+            },
+          ]);
 
-        return {
-            email,
-            password,
-            handleSignup,
-        };
-    },
+          if (profileError) {
+            console.error("Error al guardar perfil:", profileError);
+            alert("Error al guardar el perfil.");
+            return;
+          }
+        }
+
+        if (!data.session) {
+          alert("Cuenta creada. Revisa tu correo para confirmar tu cuenta.");
+        } else {
+          alert("Cuenta creada con éxito.");
+        }
+
+      } catch (err) {
+        alert(err.error_description || err.message || "Error inesperado.");
+      }
+    };
+
+    return {
+      email,
+      password,
+      username,
+      handleSignup,
+    };
+  },
 };
 </script>
