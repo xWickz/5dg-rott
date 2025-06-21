@@ -1,7 +1,7 @@
 <template>
-  
-  <section class="bg-gray-100 h-screen p-2">
 
+  <Navbar/>
+  <section class="bg-gray-100 h-screen p-5">
     <!-- check if user is available in the store.js (show auth component if not) -->
     <div v-if="!store.state.user">
       no has iniciado sesion jefe, <router-link to="/login">inicia aqui</router-link>
@@ -31,10 +31,13 @@ import { onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 
+// Import shared components
+import Navbar from "../../shared/ui/components/Navbar.vue";
 
 export default {
   components: {
     Auth,
+    Navbar,
   },
 
   setup() {
