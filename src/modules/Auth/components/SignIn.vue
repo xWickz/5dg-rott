@@ -14,19 +14,25 @@
         <input v-model="password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
       </div>
       <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar Sesión</button>
+
+      ¿No tienes cuenta? <router-link to="/register">Crea una</router-link>
     </form>
   </section>
   
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { supabase } from '../../../lib/supabaseClient';
+import { useRouter } from 'vue-router';
+
 
 export default {
     setup() {
+        const router = useRouter();
         const email = ref("");
         const password = ref("");
+
 
         const handleSignin = async () => {
             try {
@@ -40,6 +46,23 @@ export default {
                 alert(error.error_description || error.message);
             }
         };
+
+
+        // En lugar de async setup, usamos onMounted dentro
+        onMounted(async () => {
+          const { data: sessionData, error } = await supabase.auth.getSession();
+
+          if (error) {
+            console.error("Error getting session:", error);
+          } 
+
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event === "SIGNED_IN") {
+              router.push({ path: '/' });
+              console.info("El usuario entro sesion pero aun no fue guardada su sesion en el store.");
+            }
+          });
+        });
 
         return {
             email,
