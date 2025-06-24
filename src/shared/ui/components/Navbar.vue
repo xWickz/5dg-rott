@@ -40,7 +40,17 @@
                     </span>
                     <hr/>
                 </li>
-                
+              
+              <li v-if="role !== 'user'">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">
+                  <router-link to="/create">Crear publicación</router-link>
+                </a>
+              </li>
+              <li v-if="role !== 'user'">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">
+                  <router-link to="/allGuides">Lista publicaciones</router-link>
+                </a>
+              </li>
               <li>
                 <a href="#" @click="logout" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                   Cerrar sesión
@@ -75,7 +85,7 @@
           <li>
             <a href="#" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
               aria-current="page">
-              Inicio
+              <router-link to="/">Inicio</router-link>
             </a>
           </li>
         </ul>
