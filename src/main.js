@@ -18,7 +18,6 @@ supabase.auth.onAuthStateChange((event, session) => {
     console.info("La sesión fue destruida del store.");
   } else if (event === "SIGNED_IN") {
     store.state.user = session?.user ?? null;
-    router.push('/');
     console.info("La sesión fue guardada en el store.");
   }
 });

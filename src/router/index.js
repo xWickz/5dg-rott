@@ -4,11 +4,13 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Main from '../modules/Main/Main.vue';
 import Signin from '../modules/Auth/components/SignIn.vue';
 import Signup from '../modules/Auth/components/SignUp.vue';
+import createGuide from '../modules/Guides/createGuide.vue';
 
 const routes = [
     { path: '/', component: Main },
     { path: '/login', component: Signin },
-    { path: '/register', component: Signup }
+    { path: '/register', component: Signup },
+    { path: '/create', component: createGuide },
 ];
 
 const router = createRouter({
