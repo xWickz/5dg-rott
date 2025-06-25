@@ -7,6 +7,7 @@ import Signup from '../modules/Auth/components/SignUp.vue';
 import createGuide from '../modules/Guides/createGuide.vue';
 import viewGuide from '../modules/Guides/viewGuide.vue';
 import allGuides from '../modules/Guides/allGuides.vue';
+import editGuide from '../modules/Guides/editGuide.vue';
 
 const routes = [
     { path: '/', component: Main },
@@ -15,6 +16,7 @@ const routes = [
     { path: '/create', component: createGuide },
     { path: '/viewGuide/:id', component: viewGuide },
     { path: '/allGuides', component: allGuides },
+    { path: '/editGuide/:id', component: editGuide },
 ];
 
 const router = createRouter({
