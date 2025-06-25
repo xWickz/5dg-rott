@@ -22,6 +22,7 @@ import Navbar from "../../shared/ui/components/Navbar.vue";
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { supabase } from '../../lib/supabaseClient';
+import router from '../../router';
 
 export default {
     components: {
@@ -29,6 +30,25 @@ export default {
     },
 
     setup() {
+
+        onMounted(async () => {
+            const { data: userData } = await supabase.auth.getUser();
+
+            // If user is not logged in, redirect to homepage
+            if(!userData?.user) router.push("/");
+
+            const { data, error } = await supabase 
+            .from("profiles")
+            .select("role")
+            .eq("id", userData.user.id)
+            .single();
+
+            if(data.role !== "admin") {
+                router.push("/");
+            }
+
+        });
+
         const route = useRoute();
         const guide = ref(null);
         const loading = ref(true);

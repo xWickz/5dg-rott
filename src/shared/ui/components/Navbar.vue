@@ -23,6 +23,7 @@
             class="flex items-center gap-2 text-gray-800 dark:text-white hover:text-blue-600 font-medium focus:outline-none"
           >
             {{ username || store.state.user.email }}
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">{{ role === "user" ? "Usuario" : "Admin" }}</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
@@ -34,12 +35,6 @@
             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700 z-50"
           >
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                <li>
-                    <span class="px-4 py-2 block font-semibold">
-                        {{ role === "user" ? "Usuario" : "Admin" }}
-                    </span>
-                    <hr/>
-                </li>
               
               <li v-if="role !== 'user'">
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">

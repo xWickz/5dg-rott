@@ -1,20 +1,24 @@
 <template>
 
-  <Navbar/>
-  <section class="bg-gray-100 h-screen p-5">
-    <!-- check if user is available in the store.js (show auth component if not) -->
-    <div v-if="!store.state.user">
-      Componente que solo se ve al no iniciar sesion
+  <Navbar />
+  <section class="bg-gray-100 h-screen p-10">
+
+    <span class="font-bold text-2xl"> Últimas Guías </span>
+    <p class="text-gray-500 dark:text-gray-400">Consulta las últimas guías (10) que han sido publicadas.</p>
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+    <div v-if="loading">Cargando...</div>
+
+    <div v-else-if="guide && guide.length">
+      <div v-for="g in guide" :key="g.id" class="mb-2">
+        <span class="text-md"><router-link :to="`/viewGuide/${g.id}`">{{ g.title }}</router-link></span>
+        <span class="text-xs text-gray-500"> &nbsp; {{ g.profiles?.username || 'Desconocido' }}</span>
+        <p class="text-xs">{{ formatDate(g.created_at) }}</p>
+      </div>
     </div>
-
-    <!-- if user is logged in, show any component or what else -->
-    <div v-else class="p-5">
-      Componente que solo se ve al iniciar sesion
-
+    <div v-else class="flex flex-col items-center justify-center text-3xl">
+      <span class="text-gray-500">No se encontraron guías.</span>
     </div>
-
-    Componente que se ve como sea
-
   </section>
 </template>
 
@@ -22,7 +26,7 @@
 import Auth from "../Auth/components/Auth.vue";
 import { store } from "../Auth/store/store";
 import { supabase } from "../../lib/supabaseClient";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 import { useRouter } from "vue-router";
 
@@ -37,7 +41,10 @@ export default {
 
   setup() {
     const router = useRouter();
-    // En lugar de async setup, usamos onMounted dentro
+    const guide = ref(null);
+    const loading = ref(true);
+
+    
     onMounted(async () => {
       const { data: sessionData, error } = await supabase.auth.getSession();
 
@@ -47,15 +54,41 @@ export default {
       } else {
         store.state.user = sessionData?.session?.user ?? null;
       }
+
+      // Get user's guides
+      const { data, errorLoad } = await supabase
+        .from('guides')
+        .select('*, profiles(username)')
+        .order('created_at', { asceding: false })
+        .limit(10)
+
+        if (errorLoad) {
+          guide.value = null;
+        } else {
+          guide.value = data;
+        }
+        loading.value = false;
     });
 
     const logout = async () => {
       await supabase.auth.signOut();
     };
+       
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('es-ES', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+      });
+    }
 
     return {
       store,
       logout,
+      guide,
+      loading,
+      formatDate,
     };
   }
 };

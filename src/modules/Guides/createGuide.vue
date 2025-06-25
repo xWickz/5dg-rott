@@ -24,7 +24,6 @@
                 Publicar
             </button>
         </form>
-        RAW: {{ postContent }}
 
     </section>
 </template>
@@ -32,9 +31,10 @@
 <script>
 import Navbar from "../../shared/ui/components/Navbar.vue";
 import { supabase } from "../../lib/supabaseClient";
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { ClassicEditor, Essentials, Paragraph, Bold, Italic, Code } from 'ckeditor5';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
+import router from "../../router";
 import 'ckeditor5/ckeditor5.css';
 
 export default {
@@ -43,7 +43,26 @@ export default {
         Ckeditor
     },
     setup() {
-        const postContent = ref('<p>Hello world!</p>');
+
+        onMounted(async () => {
+            const { data: userData } = await supabase.auth.getUser();
+
+            // If user is not logged in, redirect to homepage
+            if(!userData?.user) router.push("/");
+
+            const { data, error } = await supabase 
+            .from("profiles")
+            .select("role")
+            .eq("id", userData.user.id)
+            .single();
+
+            if(data.role !== "admin") {
+                router.push("/");
+            }
+
+        });
+
+        const postContent = ref('<p>Tu contenido va aquí!</p>');
         const postTitle = ref('');
 
         const config = computed(() => ({
@@ -74,13 +93,15 @@ export default {
                     return;
                 }
 
-                alert("Todo bien, creo");
+                alert("¡Guía creada!");
+                postTitle.value = "";
+                postContent.value = "";
 
             } catch(err) {
                 alert(err.error_description || err.message || "Error inesperado.");
             }
         }
-        
+            
         return {
             postContent,
             postTitle,
