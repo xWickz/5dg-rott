@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-table": "^45.2.1",
     "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@supabase/supabase-js": "^2.50.0",
     "ckeditor5": "^45.2.1",

@@ -25,18 +25,39 @@
 </template>
 
 <script>
-import Navbar from '../../shared/ui/components/Navbar.vue';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
 // Router
-import router from '../../router';
+import router from '@/router';
 
 // CKEditor
-import { ClassicEditor, Essentials, Paragraph, Bold, Italic, Code } from 'ckeditor5';
+import { 
+    ClassicEditor, 
+    Essentials, 
+    Paragraph, 
+    Bold, 
+    Italic, 
+    Code, 
+    Table, 
+    TableToolbar, 
+    Image, 
+    ImageInsert, 
+    ImageStyle, 
+    ImageResize, 
+    ImageToolbar, 
+    MediaEmbed, 
+    MediaEmbedToolbar, 
+    Font, 
+    Heading,
+    Alignment,
+    List } from 'ckeditor5';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import 'ckeditor5/ckeditor5.css';
+
+// Utils
+import Navbar from '@/shared/ui/components/Navbar.vue';
 
 export default {
     components: {
@@ -55,8 +76,39 @@ export default {
 
         const config = computed(() => ({
             licenseKey: 'GPL',
-            plugins: [Essentials, Paragraph, Bold, Italic, Code],
-            toolbar: ['undo', 'redo', '|', 'bold', 'italic', 'code', '|']
+            plugins: [ Essentials, Paragraph, Bold, Italic, Code, Table, TableToolbar, Image, ImageInsert, ImageStyle, ImageResize, ImageToolbar, MediaEmbed, MediaEmbedToolbar, Font, Heading, Alignment, List ],
+            toolbar: [ 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'heading', 'bulletedList', 'numberedList', '|', 'undo', 'redo', '|', 'bold', 'italic', 'code', 'insertTable', 'alignment', '|', 'imageInsert', 'mediaEmbed' ],
+            table: {
+                contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+            },
+            image: {
+                toolbar: [
+                   'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+                    '|', 'imageTextAlternative', '|', 'imageResize'
+                ]
+            },
+            fontFamily: {
+                options: [
+                    'default',
+                    'Ubuntu, Arial, sans-serif',
+                    'Ubuntu Mono, Courier New, Courier, monospace',
+                    'Arial'
+                ]
+            },
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                ]
+            },
+            list: {
+                properties: {
+                    styles: true,
+                    startIndex: true,
+                    reversed: true
+                }
+            }
         }));
 
         onMounted(async () => {

@@ -16,9 +16,11 @@
         <p class="text-xs">{{ formatDate(g.created_at) }}</p>
       </div>
     </div>
+
     <div v-else class="flex flex-col items-center justify-center text-3xl">
       <span class="text-gray-500">No se encontraron guías.</span>
     </div>
+    
   </section>
 </template>
 
@@ -28,7 +30,8 @@ import { store } from "../Auth/store/store";
 import { supabase } from "../../lib/supabaseClient";
 import { onMounted, ref } from "vue";
 
-import { useRouter } from "vue-router";
+// Import utils 
+import { formatDate } from "../../shared/utils/formatDate";
 
 // Import shared components
 import Navbar from "../../shared/ui/components/Navbar.vue";
@@ -40,11 +43,9 @@ export default {
   },
 
   setup() {
-    const router = useRouter();
     const guide = ref(null);
     const loading = ref(true);
 
-    
     onMounted(async () => {
       const { data: sessionData, error } = await supabase.auth.getSession();
 
@@ -73,15 +74,6 @@ export default {
     const logout = async () => {
       await supabase.auth.signOut();
     };
-       
-      function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleString('es-ES', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-      });
-    }
 
     return {
       store,

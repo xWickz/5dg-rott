@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Import all the routes
-import Main from '../modules/Main/Main.vue';
-import Signin from '../modules/Auth/components/SignIn.vue';
-import Signup from '../modules/Auth/components/SignUp.vue';
-import createGuide from '../modules/Guides/createGuide.vue';
-import viewGuide from '../modules/Guides/viewGuide.vue';
-import allGuides from '../modules/Guides/allGuides.vue';
-import editGuide from '../modules/Guides/editGuide.vue';
+import Main from '@/modules/Main/Main.vue';
+import Signin from '@/modules/Auth/components/SignIn.vue';
+import Signup from '@/modules/Auth/components/SignUp.vue';
+import createGuide from '@/modules/Guides/components/createGuide.vue';
+import viewGuide from '@/modules/Guides/components/viewGuide.vue';
+import allGuides from '@/modules/Guides/components/allGuides.vue';
+import editGuide from '@/modules/Guides/components/editGuide.vue';
 
 const routes = [
     { path: '/', component: Main },
