@@ -20,7 +20,7 @@
 import { ref, onMounted } from 'vue';
 import Navbar from "@/shared/ui/components/Navbar.vue";
 import { supabase } from '@/lib/supabaseClient';
-import { checkUserAdmin } from "@/shared/utils/checkIfUserIsAdmin";
+import { checkUserAdmin } from "@/shared/utils/checkIfUserIsAdminAndKick";
 
 export default {
     components: {

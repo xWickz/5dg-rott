@@ -66,7 +66,7 @@ import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import 'ckeditor5/ckeditor5.css';
 
 // Utils
-import { checkUserAdmin } from "@/shared/utils/checkIfUserIsAdmin";
+import { checkUserAdmin } from "@/shared/utils/checkIfUserIsAdminAndKick";
 import Navbar from "@/shared/ui/components/Navbar.vue";
 
 export default {
