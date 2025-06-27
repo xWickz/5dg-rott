@@ -1,3 +1,7 @@
+/* Check if user is admin and kick */
+/* This is a module that check if user is admin */
+/* If user is not an admin they get kicked out. */
+
 import router from '../../router';
 import { supabase } from '../../lib/supabaseClient';
 
