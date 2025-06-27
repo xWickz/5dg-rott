@@ -8,7 +8,7 @@
         <div v-else-if="guide">
             <h1 class="text-3xl font-bold mb-5">{{ guide.title }}</h1>
             <p class="text-gray-400 mb-5">Publicada el {{ formatDate(guide.created_at) }}</p>
-            <div v-html="guide.content" class="prose"></div>
+            <div v-html="guide.content" class="prose ck-content"></div>
         </div>
 
         <div v-else class="flex flex-col items-center justify-center text-3xl">
@@ -27,6 +27,7 @@ import { supabase } from '@/lib/supabaseClient';
 // Utils
 import { formatDate } from '@/shared/utils/formatDate';
 import Navbar from "@/shared/ui/components/Navbar.vue";
+import 'ckeditor5/ckeditor5.css';
 
 export default {
     components: {
