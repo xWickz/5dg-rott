@@ -14,9 +14,9 @@ const routes = [
     { path: '/login', component: Signin },
     { path: '/register', component: Signup },
     { path: '/create', component: createGuide },
-    { path: '/viewGuide/:id', component: viewGuide },
+    { path: '/guide/:slug', component: viewGuide },
     { path: '/allGuides', component: allGuides },
-    { path: '/editGuide/:id', component: editGuide },
+    { path: '/edit/:id', component: editGuide },
 ];
 
 const router = createRouter({

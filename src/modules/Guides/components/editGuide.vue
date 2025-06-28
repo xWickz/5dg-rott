@@ -52,7 +52,8 @@ import {
     Font, 
     Heading,
     Alignment,
-    List } from 'ckeditor5';
+    List,
+    HorizontalLine } from 'ckeditor5';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import 'ckeditor5/ckeditor5.css';
 
@@ -76,8 +77,31 @@ export default {
 
         const config = computed(() => ({
             licenseKey: 'GPL',
-            plugins: [ Essentials, Paragraph, Bold, Italic, Code, Table, TableToolbar, Image, ImageInsert, ImageStyle, ImageResize, ImageToolbar, MediaEmbed, MediaEmbedToolbar, Font, Heading, Alignment, List ],
-            toolbar: [ 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'heading', 'bulletedList', 'numberedList', '|', 'undo', 'redo', '|', 'bold', 'italic', 'code', 'insertTable', 'alignment', '|', 'imageInsert', 'mediaEmbed' ],
+            plugins: [ 
+                Essentials, 
+                Paragraph, 
+                Bold, 
+                Italic, 
+                Code, 
+                Table, 
+                TableToolbar, 
+                Image, 
+                ImageInsert, 
+                ImageStyle, 
+                ImageResize, 
+                ImageToolbar, 
+                MediaEmbed, 
+                MediaEmbedToolbar, 
+                Font, 
+                Heading, 
+                Alignment, 
+                List,
+                HorizontalLine ],
+            toolbar: [ 
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'heading', 'bulletedList', 'numberedList', '|', 
+                'undo', 'redo', '|', 
+                'bold', 'italic', 'code', 'insertTable', 'alignment', 'horizontalLine', '|', 
+                'imageInsert', 'mediaEmbed' ],
             table: {
                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
             },

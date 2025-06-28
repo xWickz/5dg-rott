@@ -11,7 +11,7 @@
 
     <div v-else-if="guide && guide.length">
       <div v-for="g in guide" :key="g.id" class="mb-2">
-        <span class="text-md"><router-link :to="`/viewGuide/${g.id}`">{{ g.title }}</router-link></span>
+        <span class="text-md"><router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link></span>
         <span class="text-xs text-gray-500"> &nbsp; {{ g.profiles?.username || 'Desconocido' }}</span>
         <p class="text-xs">{{ formatDate(g.created_at) }}</p>
       </div>
@@ -60,7 +60,7 @@ export default {
       const { data, errorLoad } = await supabase
         .from('guides')
         .select('*, profiles(username)')
-        .order('created_at', { asceding: false })
+        .order('created_at', { asceding: true })
         .limit(10)
 
         if (errorLoad) {
