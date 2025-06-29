@@ -1,15 +1,14 @@
-/* Check if user is admin and kick */
-/* This is a module that check if user is admin */
-/* If user is not an admin they get kicked out. */
-
 import router from '../../router';
 import { supabase } from '../../lib/supabaseClient';
 
+/**
+ * Verifica el el usuario es admin.
+ * Retorna true si es admin, false si no lo es o no está logeado
+ * Si no es admin, lo envía de vuelta a la página de inicio
+ */
 export async function checkUserAdmin() {
   const { data: userData } = await supabase.auth.getUser();
-
-  // If user is not logged in, redirect to homepage
-  if (!userData?.user) router.push("/");
+  if (!userData?.user) return false;
 
   const { data, error } = await supabase
     .from("profiles")
