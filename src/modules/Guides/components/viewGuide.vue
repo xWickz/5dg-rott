@@ -78,7 +78,7 @@ export default {
                 
                 // SEO
                 const content = guide.content;
-                document.querySelector('meta[name="description"]').setAttribute("content", content.substring(0, 20) + '...');
+                document.querySelector('meta[name="description"]').setAttribute("content", content.slice(0, 20) + '...');
             }
             loading.value = false;
         });
