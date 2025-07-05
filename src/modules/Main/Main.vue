@@ -60,7 +60,7 @@ export default {
       const { data, errorLoad } = await supabase
         .from('guides')
         .select('*, profiles(username)')
-        .order('created_at', { asceding: true })
+        .order('created_at', { ascending: false })
         .limit(10)
 
         if (errorLoad) {

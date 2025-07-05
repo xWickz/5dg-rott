@@ -24,9 +24,9 @@
                 <span class="text-gray-500">No se pudo encontrar lo que estabas buscando.</span>
             </div>
 
-            <div class="grid">
+            <div class="grid px-10">
                 <widgetLatestPost/>
-            </diV>
+            </div>
         </div>
 
     </section>
@@ -85,10 +85,6 @@ export default {
                 guide.value = null;
             } else {
                 guide.value = data;
-                
-                // SEO
-                const content = guide.value.content;
-                document.querySelector('meta[name="description"]').setAttribute("content", content.slice(0, 20) + '...');
             }
             loading.value = false;
         });

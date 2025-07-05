@@ -6,7 +6,7 @@
 
         <div v-else-if="guide && guide.length">
             <div v-for="g in guide" :key="g.id" class="mb-2">
-                <h1 class="text-md"><router-link :to="`/viewGuide/${g.id}`">{{ g.title }}</router-link></h1>
+                <h1 class="text-md"><router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link></h1>
             </div>
         </div>
         <div v-else class="flex flex-col items-center justify-center text-3xl">
@@ -28,15 +28,13 @@ export default {
     },
 
     setup() {
-
-        onMounted(async () => {
-            checkUserAdmin();
-        });
-
         const guide = ref(null);
         const loading = ref(true);
 
         onMounted(async () => {
+
+            checkUserAdmin();
+
             const { data, error } = await supabase
                 .from('guides')
                 .select('*')
