@@ -75,6 +75,10 @@ export default {
                 guide.value = null;
             } else {
                 guide.value = data;
+                
+                // SEO
+                const content = guide.content;
+                document.querySelector('meta[name="description"]').setAttribute("content", content.substring(0, 20) + '...');
             }
             loading.value = false;
         });
