@@ -12,7 +12,7 @@
                 <div class="flex items-center">
                     <div class="flex-1 min-w-0 ms-4">
                         <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                            <router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link>
+                            <a :href="`/guide/${g.id}`">{{ g.title }}</a>
                         </p>
                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                             {{ g.profiles?.username || 'Desconocido' }}
@@ -52,7 +52,7 @@ export default {
 
         return {
             guide,
-            loading
+            loading,
         }
     }
 }

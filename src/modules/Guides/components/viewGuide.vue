@@ -3,7 +3,7 @@
     <Navbar />
     <section class="bg-gray-100 min-h-screen p-10">
 
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
             <div v-if="loading">Cargando...</div>
     
@@ -24,7 +24,7 @@
                 <span class="text-gray-500">No se pudo encontrar lo que estabas buscando.</span>
             </div>
 
-            <div class="grid px-10">
+            <div class="grid px-10 hidden md:block">
                 <widgetLatestPost/>
             </div>
         </div>
@@ -55,7 +55,6 @@ export default {
         const route = useRoute();
         const guide = ref(null);
         const loading = ref(true);
-
         const isAdmin = ref(false);
 
         onMounted(async () => {
