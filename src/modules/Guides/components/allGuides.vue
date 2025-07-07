@@ -1,19 +1,27 @@
 <template>
 
     <Navbar />
-    <section class="bg-gray-100 h-screen p-10">
-        <div v-if="loading">Cargando...</div>
+    <main class="bg-gray-100 h-screen p-10">
+        <p v-if="loading">Cargando...</p>
 
-        <div v-else-if="guide && guide.length">
-            <div v-for="g in guide" :key="g.id" class="mb-2">
-                <h1 class="text-md"><router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link></h1>
-            </div>
-        </div>
-        <div v-else class="flex flex-col items-center justify-center text-3xl">
-        <span class="font-bold">¡Ha ocurrido un error!</span>
-        <span class="text-gray-500">No se pudo encontrar lo que estabas buscando.</span>
-        </div>
-    </section>
+        <section v-else-if="guide && guide.length">
+            <h1 class="text-2xl font-bold"> Lista de Guias </h1>
+            <ul>
+                <li v-for="g in guide" :key="g.id" class="mb-2">
+                    <article>
+                        <p class="text-md">
+                            <router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link>
+                        </p>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section v-else class="flex flex-col items-center justify-center text-3xl">
+            <h2 class="font-bold">¡Ha ocurrido un error!</h2>
+            <p class="text-gray-500">No se pudo encontrar lo que estabas buscando.</p>
+        </section>
+    </main>
 </template>
 
 <script>

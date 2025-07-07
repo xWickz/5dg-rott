@@ -1,7 +1,10 @@
 <template>
     <Navbar />
-    <section class="bg-gray-100 h-screen p-10">
-        <div v-if="loading">Cargando...</div>
+
+    <main class="bg-gray-100 h-screen p-10">
+
+        <p v-if="loading">Cargando...</p>
+
         <form v-else @submit.prevent="updateGuide" class="space-y-4">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título</label>
             <input v-model="title" type="text" id="title"
@@ -16,12 +19,15 @@
                 class="mt-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                 Guardar cambios
             </button>
-            <div v-else class="text-red-500 mt-2">No tienes permiso para editar esta guía.</div>
+
+            <p v-else class="text-red-500 mt-2">No tienes permiso para editar esta guía.</p>
 
         </form>
-        <div v-if="errorMsg" class="text-red-500 mt-2">{{ errorMsg }}</div>
-        <div v-if="successMsg" class="text-green-600 mt-2">{{ successMsg }}</div>
-    </section>
+
+        <p v-if="errorMsg" class="text-red-500 mt-2">{{ errorMsg }}</p>
+        <p v-if="successMsg" class="text-green-600 mt-2">{{ successMsg }}</p>
+
+    </main>
 </template>
 
 <script>
@@ -33,27 +39,28 @@ import { supabase } from '@/lib/supabaseClient';
 import router from '@/router';
 
 // CKEditor
-import { 
-    ClassicEditor, 
-    Essentials, 
-    Paragraph, 
-    Bold, 
-    Italic, 
-    Code, 
-    Table, 
-    TableToolbar, 
-    Image, 
-    ImageInsert, 
-    ImageStyle, 
-    ImageResize, 
-    ImageToolbar, 
-    MediaEmbed, 
-    MediaEmbedToolbar, 
-    Font, 
+import {
+    ClassicEditor,
+    Essentials,
+    Paragraph,
+    Bold,
+    Italic,
+    Code,
+    Table,
+    TableToolbar,
+    Image,
+    ImageInsert,
+    ImageStyle,
+    ImageResize,
+    ImageToolbar,
+    MediaEmbed,
+    MediaEmbedToolbar,
+    Font,
     Heading,
     Alignment,
     List,
-    HorizontalLine } from 'ckeditor5';
+    HorizontalLine
+} from 'ckeditor5';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import 'ckeditor5/ckeditor5.css';
 
@@ -77,37 +84,37 @@ export default {
 
         const config = computed(() => ({
             licenseKey: 'GPL',
-            plugins: [ 
-                Essentials, 
-                Paragraph, 
-                Bold, 
-                Italic, 
-                Code, 
-                Table, 
-                TableToolbar, 
-                Image, 
-                ImageInsert, 
-                ImageStyle, 
-                ImageResize, 
-                ImageToolbar, 
-                MediaEmbed, 
-                MediaEmbedToolbar, 
-                Font, 
-                Heading, 
-                Alignment, 
+            plugins: [
+                Essentials,
+                Paragraph,
+                Bold,
+                Italic,
+                Code,
+                Table,
+                TableToolbar,
+                Image,
+                ImageInsert,
+                ImageStyle,
+                ImageResize,
+                ImageToolbar,
+                MediaEmbed,
+                MediaEmbedToolbar,
+                Font,
+                Heading,
+                Alignment,
                 List,
-                HorizontalLine ],
-            toolbar: [ 
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'heading', 'bulletedList', 'numberedList', '|', 
-                'undo', 'redo', '|', 
-                'bold', 'italic', 'code', 'insertTable', 'alignment', 'horizontalLine', '|', 
-                'imageInsert', 'mediaEmbed' ],
+                HorizontalLine],
+            toolbar: [
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'heading', 'bulletedList', 'numberedList', '|',
+                'undo', 'redo', '|',
+                'bold', 'italic', 'code', 'insertTable', 'alignment', 'horizontalLine', '|',
+                'imageInsert', 'mediaEmbed'],
             table: {
-                contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
             },
             image: {
                 toolbar: [
-                   'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+                    'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
                     '|', 'imageTextAlternative', '|', 'imageResize'
                 ]
             },
@@ -150,14 +157,14 @@ export default {
             } else {
                 title.value = data.title;
                 content.value = data.content;
-                
+
                 // Match post author(uuid) with user(uuid)
                 canEdit.value = userId && data.author === userId;
             }
             loading.value = false;
 
             // Kick user if can't edit LOL
-            if(!canEdit.value) {
+            if (!canEdit.value) {
                 router.push("/");
             }
         });
@@ -167,7 +174,7 @@ export default {
             successMsg.value = '';
             if (!canEdit.value) {
                 errorMsg.value = 'No tienes permiso para editar esta guía.';
-                
+
                 return;
             }
             const { error } = await supabase
@@ -181,17 +188,17 @@ export default {
             }
         };
 
-        return { 
-            loading, 
-            title, 
+        return {
+            loading,
+            title,
             content,
-            updateGuide, 
-            errorMsg, 
+            updateGuide,
+            errorMsg,
             successMsg,
             ClassicEditor,
             config,
             canEdit
-         };
+        };
     }
 };
 </script>

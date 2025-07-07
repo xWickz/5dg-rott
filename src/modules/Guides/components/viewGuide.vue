@@ -1,35 +1,36 @@
 <template>
 
     <Navbar />
-    <section class="bg-gray-100 min-h-screen p-10">
+    <main class="bg-gray-100 min-h-screen p-10">
 
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-            <div v-if="loading">Cargando...</div>
-    
+            <p v-if="loading">Cargando...</p>
+
             <div v-else-if="guide" class="col-span-2">
                 <h1 class="text-3xl font-bold mb-5">{{ guide.title }}</h1>
-                <span v-if="isAdmin">
-                    <button type="button"
-                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                        <router-link :to="`/edit/${guide.id}`">Editar</router-link>
-                    </button>
-                </span>
-                <p class="text-gray-400 mb-5">Publicada el {{ formatDate(guide.created_at) }}</p>
-                <div v-html="guide.content" class="prose ck-content"></div>
-            </div>
-                
-            <div v-else class="flex flex-col items-center justify-center text-3xl">
-                <span class="font-bold">¡Ha ocurrido un error!</span>
-                <span class="text-gray-500">No se pudo encontrar lo que estabas buscando.</span>
+                <time class="text-gray-400 mb-5" :datetime="guide.created_at">
+                    Publicada el {{ formatDate(guide.created_at) }}
+                </time>
+                <button v-if="isAdmin" type="button"
+                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                    <router-link :to="`/edit/${guide.id}`">Editar Guía</router-link>
+                </button>
+
+                <section v-html="guide.content" class="prose ck-content"></section>
             </div>
 
-            <div class="grid px-10 hidden md:block">
-                <widgetLatestPost/>
-            </div>
+            <section v-else class="flex flex-col items-center justify-center text-3xl">
+                <h1 class="font-bold">¡Ha ocurrido un error!</h1>
+                <p class="text-gray-500">No se pudo encontrar lo que estabas buscando.</p>
+            </section>
+
+            <aside class="grid px-10 hidden md:block">
+                <widgetLatestPost />
+            </aside>
+
         </div>
-
-    </section>
+    </main>
 </template>
 
 <script>
@@ -64,7 +65,7 @@ export default {
             const parameters = route.params.slug;
             let data, error;
 
-            if(/^\d+$/.test(parameters)) {
+            if (/^\d+$/.test(parameters)) {
                 ({ data, error } = await supabase
                     .from('guides')
                     .select('*')
@@ -72,7 +73,7 @@ export default {
                     .single());
             }
 
-            if(!data) {
+            if (!data) {
                 ({ data, error } = await supabase
                     .from('guides')
                     .select('*')
@@ -80,7 +81,7 @@ export default {
                     .single());
             }
 
-            if(error || !data) {
+            if (error || !data) {
                 guide.value = null;
             } else {
                 guide.value = data;
@@ -88,8 +89,8 @@ export default {
             loading.value = false;
         });
 
-        return { 
-            guide, 
+        return {
+            guide,
             loading,
             formatDate,
             isAdmin

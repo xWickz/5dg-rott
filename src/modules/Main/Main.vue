@@ -1,27 +1,26 @@
 <template>
 
-  <Navbar />
-  <section class="bg-gray-100 h-screen p-10">
+    <Navbar />
+    <main class="bg-gray-100 h-screen p-10">
 
-    <span class="font-bold text-2xl"> Últimas Guías </span>
-    <p class="text-gray-500 dark:text-gray-400">Consulta las últimas guías (10) que han sido publicadas.</p>
-    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-    <div v-if="loading">Cargando...</div>
-
-    <div v-else-if="guide && guide.length">
-      <div v-for="g in guide" :key="g.id" class="mb-2">
-        <span class="text-md"><router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link></span>
-        <span class="text-xs text-gray-500"> &nbsp; {{ g.profiles?.username || 'Desconocido' }}</span>
-        <p class="text-xs">{{ formatDate(g.created_at) }}</p>
-      </div>
-    </div>
-
-    <div v-else class="flex flex-col items-center justify-center text-3xl">
-      <span class="text-gray-500">No se encontraron guías.</span>
-    </div>
-    
-  </section>
+      <h1 class="font-bold text-2xl"> Últimas Guías </h1>
+      <h2 class="text-gray-500 dark:text-gray-400">Consulta las últimas guías (10) que han sido publicadas.</h2>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+  
+      <p v-if="loading">Cargando...</p>
+  
+      <span v-else-if="guide && guide.length">
+        <div v-for="g in guide" :key="g.id" class="mb-2">
+          <h1 class="text-md hover:text-gray-600"><router-link :to="`/guide/${g.id}`">{{ g.title }}</router-link></h1>
+          <h2 class="text-xs text-gray-500">{{ g.profiles?.username || 'Desconocido' }}</h2>
+          <p class="text-xs">{{ formatDate(g.created_at) }}</p>
+        </div>  
+      </span>
+  
+      <span v-else class="flex flex-col items-center justify-center text-3xl">
+        <p class="text-gray-500">No se encontraron guías.</p>
+      </span>
+    </main>
 </template>
 
 <script>
