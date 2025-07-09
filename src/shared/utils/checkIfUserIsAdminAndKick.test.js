@@ -31,7 +31,7 @@ import { checkUserAdmin } from './checkIfUserIsAdminAndKick.js'
 
 test('Redirige si el usuario no es administrador', async() => {
     supabase.auth.getUser.mockResolvedValue({ data: { user: { id: 1 } } });
-    singleMock.mockResolvedValueOnce({ data: { role: 'user'}, error: null });
+    singleMock.mockResolvedValueOnce({ data: { role: 'user' }, error: null });
 
     await checkUserAdmin();
     expect(router.push).toHaveBeenCalledWith('/');
