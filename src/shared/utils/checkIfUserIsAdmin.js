@@ -1,5 +1,4 @@
-import router from '../../router';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
 export async function checkUserAdmin() {
   const { data: userData } = await supabase.auth.getUser();
@@ -13,3 +12,5 @@ export async function checkUserAdmin() {
 
     return data.role === 'admin';
 }
+
+module.exports = checkUserAdmin;
