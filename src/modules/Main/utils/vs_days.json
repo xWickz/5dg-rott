@@ -1,0 +1,65 @@
+{
+  "lunes": {
+    "titulo": "Entrenamiento de Radar",
+    "tareas": [
+      "Gastar energía",
+      "Subir héroes",
+      "Subir tu dron",
+      "Recolectar recursos"
+    ]
+  },
+  "martes": {
+    "titulo": "Expansión de Base",
+    "tareas": [
+      "Construcción y Aceleradores",
+      "Enviar camiones legendarios",
+      "Enviar tareas legendarias",
+      "Reclutar supervivientes"
+    ]
+  },
+  "miercoles": {
+    "titulo": "Era de la Ciencia",
+    "tareas": [
+      "Usar aceleradores de tecnología",
+      "Usar medallas de honor",
+      "Aumentar poder de tecnología",
+      "Hacer tareas de radar",
+      "Abrir cofres de componentes de dron"
+    ]
+  },
+  "jueves": {
+    "titulo": "Entrenar héroes",
+    "tareas": [
+      "Entrenar héroes",
+      "Subir estrellas de héroes",
+      "Subir habilidades de héroes",
+      "Reclutar héroes"
+    ]
+  },
+  "viernes": {
+    "titulo": "Movilización Total",
+    "tareas": [
+      "Hacer tareas de radar",
+      "Usar aceleradores de construcción",
+      "Usar aceleradores de tecnología",
+      "Usar aceleradores de entrenamiento",
+      "Aumentar poder de construcción, tecnología y entrenamiento",
+      "Aumentar estadísticas del Señor Supremo"
+    ]
+  },
+  "sabado": {
+    "titulo": "Duelo de Alianzas",
+    "tareas": [
+      "Enviar camiones legendarios",
+      "Enviar tareas legendarias",
+      "Usar aceleradores de construcción",
+      "Usar aceleradores de tecnología",
+      "Usar aceleradores de entrenamiento",
+      "Matar unidades enemigas"
+    ]
+  },
+  "domingo": {
+    "titulo": "Descanso",
+    "tareas": []
+  }
+}

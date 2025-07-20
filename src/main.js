@@ -1,9 +1,13 @@
 import { createApp } from 'vue'
+import { supabase } from './lib/supabaseClient'
+import { store } from './modules/Auth/store/store'
 import App from './App.vue'
-import './assets/style.css';
-import router from './router';
-import { supabase } from './lib/supabaseClient';
-import { store } from './modules/Auth/store/store';
+import router from './router'
+
+import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice'
+
+import './assets/style.css'
 
 const app = createApp(App);
 
@@ -21,6 +25,9 @@ supabase.auth.onAuthStateChange((event, session) => {
     console.info("La sesión fue guardada en el store.");
   }
 });
+
+app.use(PrimeVue);
+app.use(ToastService);
 
 app.use(router);
 app.mount('#app');

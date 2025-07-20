@@ -12,5 +12,3 @@ export async function checkUserAdmin() {
 
     return data.role === 'admin';
 }
-
-module.exports = checkUserAdmin;
