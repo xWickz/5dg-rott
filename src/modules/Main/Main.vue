@@ -2,7 +2,7 @@
 
   <Navbar />
 
-  <main class="bg-gray-100 h-screen p-10">
+  <main class="bg-gray-100 min-h-screen p-10">
 
     <h1 class="font-bold text-2xl"> Últimas Guías </h1>
     <h2 class="text-gray-500 dark:text-gray-400">Consulta las últimas guías (10) que han sido publicadas.</h2>
@@ -23,7 +23,7 @@
         <p class="text-gray-500">No se encontraron guías.</p>
       </span>
 
-      <aside class="grid px-20 hidden md:block">
+      <aside class="grid px-10 hidden md:block">
         <versusDays/>
       </aside>
     </div>
